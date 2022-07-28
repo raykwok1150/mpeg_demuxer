@@ -151,7 +151,6 @@ int main(int argc, const char* argv[])
     destroy_filter(&demuxer);
 
 L_ERR_CREATE_FILTER:
-L_ERR_ALLOC_OUTPUT_CONTEXT:
 L_ERR_FIND_STREAM_INFO:
     avformat_close_input(&demuxer.ctx);
 L_ERR_OPEN_INPUT:

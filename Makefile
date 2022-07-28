@@ -1,20 +1,21 @@
-CC ?= gcc
-CFLAGS ?= -fPIC -Wall
-DEBUG_MODE ?= -g
-LD_FLAGS = -lavcodec -lavformat -lavutil $(DEBUG_MODE)
+# use pkg-config for getting CFLAGS and LDLIBS
+FFMPEG_LIBS = 	libavformat							\
+				libavcodec							\
+				libavutil							\
 
-all: mpeg_demuxer remuxing
+CFLAGS += -Wall -g
+CFLAGS := $(shell pkg-config --cflags $(FFMPEG_LIBS)) $(CFLAGS)
+LDLIBS := $(shell pkg-config --libs $(FFMPEG_LIBS)) $(LDLIBS)
 
-.PHONY: all
+DEMUXER = 	mpeg_demuxer 							\
+			remuxing								\
 
-mpeg_demuxer: mpeg_demuxer.o
-	$(CC) -o $@ $< $(LD_FLAGS)
+OBJ = $(addsuffix .o, $(DEMUXER))
+#remuxing : LDLIBS += lm
 
-remuxing: remuxing.o
-	$(CC) -o $@ $< $(LD_FLAGS)
+.phony: all clean
 
-%.o: %.c
-	$(CC) -c -o $@ $<
+all: $(OBJ) $(DEMUXER)
 
 clean:
-	rm -fr *.o *.ivf mpeg_demuxer remuxing
+	$(RM) $(DEMUXER) $(OBJ)
