@@ -5,6 +5,7 @@ sudo apt install libavformat-dev
 sudo apt install libavcodec-dev
 ```
 ## How to use
+### mpeg_demuxer
 ```bash
 ./mpeg_demuxer [inputfile] [outputfile]
 ```
@@ -68,4 +69,22 @@ Input #0, hevc, from 'video-h265.mkv.h265':
     Stream #0:0: Video: hevc (Main), yuv420p(tv, bt709), 1920x960 [SAR 1:1 DAR 2:1], 25 fps, 25 tbr, 1200k tbn, 25 tbc
 
 
+```
+#remuxing
+```bash
+./remuxing [input] [output]
+```
+
+```bash
+$ ./remuxing src01_480x272_0.025.vp9 src01_480x272_0.025.vp9.ivf
+av log level: 32
+Input #0, matroska,webm, from 'src01_480x272_0.025.vp9':
+  Metadata:
+    encoder         : vpxenc v1.2.0
+  Duration: 00:00:10.00, start: 0.000000, bitrate: 82 kb/s
+    Stream #0:0(eng): Video: vp9 (Profile 0), yuv420p(tv), 480x272, SAR 1:1 DAR 30:17, 25 fps, 25 tbr, 1k tbn, 1k tbc (default)
+    Side data:
+      stereo3d: 2D
+Output #0, ivf, to 'src01_480x272_0.025.vp9.ivf':
+    Stream #0:0: Video: vp9 (Profile 0), yuv420p(tv), 480x272, q=2-31
 ```
